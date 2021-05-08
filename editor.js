@@ -1,6 +1,7 @@
 const btns = document.querySelectorAll(".btn");
 const editor = document.querySelector(".editor");
 
+// Get purpose of buttons
 const init = () => {
   for (let btn of btns) {
     btn.addEventListener("click", () => {
@@ -9,32 +10,34 @@ const init = () => {
     });
   }
 };
-
+// Export data to LocalStorage & Json file
 const exportText = () => {
   let html = editor.innerHTML;
   let json = JSON.stringify(html);
   saveFile({ txtHtml: json })
-  console.log();
   localStorage.setItem("currentText", JSON.stringify({ txtHtml: json }));
 };
 
+// Import data to Local Storage & Json
 const importText = () => {
-  loadFile()
   const textSaved = JSON.parse(localStorage.getItem("currentText"));
-  // prevent from overwrite with empty string
+  // prevent from overwrite with empty string local storage
+  // Get data from local storage if exist other way read file 
   if (textSaved) {
     editor.innerHTML = textSaved.txtHtml
       .replaceAll("\\n", "")
       .substring(1)
       .slice(0, -1);
   } else {
-    console.log("Text not save on local storage")
+    loadFile()
   }
-
+  editor.innerHTML = 'no data Saved !'
+  setTimeout(() => {
+    editor.innerHTML = '';
+  }, 1000)
 
 };
-document.querySelector(".btn-export").addEventListener("click", exportText);
-document.querySelector(".btn-import").addEventListener("click", importText);
+
 
 // clear local Storage & dom
 document.querySelector(".btn-remove").addEventListener("click", () => {
@@ -42,8 +45,6 @@ document.querySelector(".btn-remove").addEventListener("click", () => {
   editor.innerHTML = "";
 });
 
-// Init setup
-init();
 
 
 
@@ -59,8 +60,6 @@ const saveFile = (body) => {
   console.log("tetst", body.txtHtml)
 }
 
-
-
 const loadFile = () => {
   fetch('http://localhost:3000/file')
     .then(response => response.json())
@@ -71,6 +70,12 @@ const loadFile = () => {
           .slice(0, -1)
         editor.innerHTML = rawData
       }
-    }).catch(err =>
-      console.log("err", err))
+    }).catch(err => {
+      console.log("err", err)
+    })
 }
+//  Export & Import listeners
+document.querySelector(".btn-export").addEventListener("click", exportText);
+document.querySelector(".btn-import").addEventListener("click", importText);
+// Init setup
+init();

@@ -59,3 +59,10 @@ body {
   margin: 5em auto;
   text-align: center;
 }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
