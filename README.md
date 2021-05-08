@@ -7,7 +7,7 @@ Stack:
 - JavaScript
 - Node.js ( express.js )
 
-Ardent Recruitment Task - 
+Ardent Recruitment Task
 
 ## View
 ![project photo](/img-project.png)
