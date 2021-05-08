@@ -57,7 +57,6 @@ const saveFile = (body) => {
     body: JSON.stringify(body)
   }
   fetch('http://localhost:3000', options)
-  console.log("tetst", body.txtHtml)
 }
 
 const loadFile = () => {
