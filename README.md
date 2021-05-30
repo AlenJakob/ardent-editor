@@ -11,3 +11,13 @@ Ardent Recruitment Task
 
 ## View
 ![project photo](/img-project.png)
+
+# Running project
+
+## 1. Start server - use:
+
+- node app.js 
+
+## 2. Start project - use:
+
+- npm run dev

@@ -1,6 +1,6 @@
 const btns = document.querySelectorAll(".btn");
 const editor = document.querySelector(".editor");
-
+const textSaved = JSON.parse(localStorage.getItem("currentText"));
 // Get purpose of buttons
 const init = () => {
   for (let btn of btns) {
@@ -15,34 +15,54 @@ const exportText = () => {
   let html = editor.innerHTML;
   let json = JSON.stringify(html);
   saveFile({ txtHtml: json })
+
+
+  console.log("object txthtm", { txtHtml: json })
   localStorage.setItem("currentText", JSON.stringify({ txtHtml: json }));
 };
 
 // Import data to Local Storage & Json
 const importText = () => {
-  const textSaved = JSON.parse(localStorage.getItem("currentText"));
+  console.log(textSaved)
   // prevent from overwrite with empty string local storage
   // Get data from local storage if exist other way read file 
   if (textSaved) {
+    console.log("There is local storage")
     editor.innerHTML = textSaved.txtHtml
       .replaceAll("\\n", "")
       .substring(1)
       .slice(0, -1);
-  } else {
-    loadFile()
+  } else if (!textSaved) {
+    editor.innerHTML = 'no data Saved !'
+    setTimeout(() => {
+      editor.innerHTML = '';
+      loadFile()
+    }, 1000)
   }
-  editor.innerHTML = 'no data Saved !'
-  setTimeout(() => {
-    editor.innerHTML = '';
-  }, 1000)
+
 
 };
 
 
 // clear local Storage & dom
 document.querySelector(".btn-remove").addEventListener("click", () => {
-  localStorage.clear();
-  editor.innerHTML = "";
+
+  if (textSaved) {
+    localStorage.clear();
+    fetch("http://localhost:3000/file-remove", {
+      method: 'PUT'
+    })
+    editor.innerHTML = 'You have been remove data !'
+    setTimeout(() => {
+      editor.innerHTML = '';
+    }, 2000)
+  }else{
+    editor.innerHTML = 'There is no Data to remove, please wrote your text !'
+    setTimeout(() => {
+      editor.innerHTML = '';
+    }, 2000)
+  }
+
 });
 
 
@@ -76,5 +96,6 @@ const loadFile = () => {
 //  Export & Import listeners
 document.querySelector(".btn-export").addEventListener("click", exportText);
 document.querySelector(".btn-import").addEventListener("click", importText);
+
 // Init setup
 init();
