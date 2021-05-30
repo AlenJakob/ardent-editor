@@ -12,12 +12,10 @@ const init = () => {
 };
 // Export data to LocalStorage & Json file
 const exportText = () => {
+  alert("data have bees saved !")
   let html = editor.innerHTML;
   let json = JSON.stringify(html);
   saveFile({ txtHtml: json })
-
-
-  console.log("object txthtm", { txtHtml: json })
   localStorage.setItem("currentText", JSON.stringify({ txtHtml: json }));
 };
 
@@ -43,7 +41,6 @@ const importText = () => {
 
 };
 
-
 // clear local Storage & dom
 document.querySelector(".btn-remove").addEventListener("click", () => {
 
@@ -56,7 +53,7 @@ document.querySelector(".btn-remove").addEventListener("click", () => {
     setTimeout(() => {
       editor.innerHTML = '';
     }, 2000)
-  }else{
+  } else {
     editor.innerHTML = 'There is no Data to remove, please wrote your text !'
     setTimeout(() => {
       editor.innerHTML = '';
@@ -64,8 +61,6 @@ document.querySelector(".btn-remove").addEventListener("click", () => {
   }
 
 });
-
-
 
 
 const saveFile = (body) => {
