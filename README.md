@@ -10,7 +10,7 @@ Stack:
 Ardent Recruitment Task
 
 ## View
-![project photo](/img-project.png)
+![project photo](/img-project.PNG)
 
 # Running project
 
